@@ -9,9 +9,9 @@ README como responsável pela tradução do mesmo.
 
 #Arquivos/Andamento
 
-00-intro.md Traduzido | Revisado
+00-intro.md `Traduzido | Revisado`
 
-01-basic-usage.md Traduzido | Revisado
+01-basic-usage.md `Traduzido | Revisado`
 
 02-libraries.md 
 
