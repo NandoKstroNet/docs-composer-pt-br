@@ -38,13 +38,13 @@ E será exibida a lista de comandos disponíveis.
 
 
 
-##<a id="project-setup"></a> `composer.json`: Setup do Projeto 
+##<a name="project-setup"></a> `composer.json`: Setup do Projeto 
 
 Para começar a utilizar o Composer em seu projeto, tudo do que você precisa é do arquivo `composer.json`. Este arquivo descreve as dependências de seus projetos, bem como a descrição de outros metadados.
 
 O formato [JSON](json.org) é bem fácil de ser escrito e permite que você defina estruturas aninhadas.
 
-###<a id="require-key"></a>A chave `require`    
+###<a name="require-key"></a>A chave `require`    
 
 A primeira (e geralmente única) informação que você insere no `composer.json` é a chave `require`. Você simplesmente está mostrando ao Composer quais pacotes seu projeto depende.
 
@@ -58,13 +58,13 @@ A primeira (e geralmente única) informação que você insere no `composer.json
 No exemplo acima,`require` pede um objeto que faça a referência as versões do pacote (ex.: `1.0.*`).
 
 
-###<a id="package-names"></a>Nomes de pacote
+###<a name="package-names"></a>Nomes de pacote
 
 
 Um nome de pacote consiste no nome do fornecedor (*vendor*) e no nome do projeto. Frequentemente eles serão identicos - o nome do *vendor* apenas existe para evitar conflitos com nomes. Isto permite que duas pessoas diferentes criem uma biblioteca chamada `json`, que então terão os nomes `igorw/json` e `seldaek/json`, por exemplo.
 Aqui vamos requerer o  `monolog/monolog`, então o *vendor* name e o nome do projeto são os mesmos. Para projetos com nomes únicos, isto é altamente recomendado: e permite mais adiante, adicionar mais projetos relacionados dentro do mesmo *namespace*. Se você está mantendo uma lib, essa medida irá tornar mais fácil a divisão da mesma em pacotes menores/desacoplados.
 
-###<a id="package-versions"></a>Versões de pacotes
+###<a name="package-versions"></a>Versões de pacotes
 
 No exemplo anterior nós 'exigimos' a versão `1.0.*` do `monolog`. Isto abrange qualquer versão de desenvolvimento que esteja no branch `1.0`. Serão contempladas as versões `1.0.0`,`1.0.2` ou `1.0.20`.
 
@@ -78,18 +78,18 @@ Restrições de versão podem ser definidas de algumas maneiras diferentes:
 | Operador til (~)  |     `~1.2`      |   Muito útil para projetos que seguem o versionamento semântico. `~1.2` é equivalente a    `>=1.2,<2.0`    . Para maiores detalhes, leia a próxima seção.   |
 
 
-###<a id="next-release"></a>Próximo release significativo (operador ~).
+###<a name="next-release"></a>Próximo release significativo (operador ~).
 
 O operador til (`~`) é melhor explicado através de um exemplo: `~1.2` é equivalente a `>=1.2,<2.0`, enquanto `~1.2.3` é equivalente a `>=1.2.3,<1.3`. Como você pode ver, é mais útil para projetos que respeitam o [versionamento semântico](semver.org). Um uso comum seria para marcar a menor versão secundária depentente, como `~1.2` (que permite qualquer outra versão exceto a 2.0). Uma vez que, teoricamente, não deve haver problemas de compatibilidade em versões anteriores a 2.0, o pacote irá funcionar corretamente. Uma outra outra explicação é que o `~` especifica uma versão mínima, mas permite que o último digito especificado seja incrementado.
 
 >Nota: Embora `2.0-beta.1` é estritamente anterior a `.2.0`, uma restrição de versão igual a `~1.2` não será instalada. Como dito anteriormente, `~1.2` significa que o dígito `x.2` pode mudar, mas o dígito `1.x` é fixo.
 
 
-###<a id="stability"></a>Estabilidade
+###<a name="stability"></a>Estabilidade
 
 Por padrão apenas releases estáveis são levados em conta. Se você gostaria de trazer versões RC, *beta*, *alpha* ou *dev* de suas dependências, você pode fazer isto usando [flags de escalabilidade](https://getcomposer.org/doc/04-schema.md#package-links). Para mudar isto para todos os pacotes ao invés de fazer isto por dependência, você pode também utilizar a definição [minimum-stability](https://getcomposer.org/doc/04-schema.md#minimum-stability).
 
-##<a id="dependencies"></a>Instalando dependências
+##<a name="dependencies"></a>Instalando dependências
 
 Para buscar as dependências definidas para o seu projeto local, execute o comando `install` do `composer.phar`.
 
@@ -106,7 +106,7 @@ Outra coisa é que o comando `install` faz é adicionar o arquivo `composer.lock
 
 
 
-##<a id="composerlock"></a>composer.lock - O arquivo de  *Lock*
+##<a name="composerlock"></a>composer.lock - O arquivo de  *Lock*
 
 
 Após a instalação das dependências, o Composer irá criar a lista das versões exatas instaladas dentro do arquivo composer.lock, o que fará com que o projeto seja "fechado" nessas versões específicas.
@@ -129,7 +129,7 @@ Se você deseja apenas instalar ou atualizar uma dependência apenas, você pode
 >Nota: para bibliotecas, não é necessáriamente recomendado dar um "commit" no arquivo de lock. Veja também: [Bibliotecas - arquivo de lock](https://getcomposer.org/doc/02-libraries.md#lock-file)
 
 
-##<a id="packagist"></a>Packagist
+##<a name="packagist"></a>Packagist
 
 
 [Packagist](https://packagist.org/) é o principal repositório do Composer. Um repositório do composer é basicamente um repositório de pacotes, ou seja, um lugar onde você pode baixá-los. O Packagist visa ser o repositório central, aquele que todo mundo usa. Isto significa que você pode automaticamente requerer qualquer pacote disponível nele.
@@ -139,7 +139,7 @@ Se você acessar o [site do Packagist](https://packagist.org/) (packagist.org), 
 Qualquer projeto opensource usando o Composer deve publicar seus pacotes no packagist. Uma biblioteca não precisa estar no Packagist para ser usada pelo Composer, mas simplifica muito a nossa vida.
 
 
-##<a id="autoloading"></a>Autoloading
+##<a name="autoloading"></a>Autoloading
 
 Para bibliotecas que especificam informações de autoload, o Composer gera um arquivo chamado vendor/autolload.php. Simplesmente dê um include neste arquivo e ele será carregado automaticamente.
 
