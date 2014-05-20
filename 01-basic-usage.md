@@ -23,13 +23,14 @@ Para instalar o composer, você apenas precisa baixar o executável    composer.
 Para maiores detalhes, consulte o capítulo de introdução.
 
 Para checar se o Composer está OK, execute o PHAR através do php: 
+
     php composer phar    
 
 E será exibida a lista de comandos disponíveis.
 
 
-Nota: Você também pode executar as verificações apenas sem baixar Composer utilizando o - verificar opção. Para mais informações, é só usar - help.
-Nota: Você não precisa baixar o composer para fazer essa verificação, basta usar o parâmetro    --check    . Para maiores informações, use o parâmetro     --help     .
+Nota: Você também pode executar as somente as verificações sem baixar o Composer, utilizando o - verificar opção. Para mais informações, é só usar - help.
+Nota: Você não precisa baixar o composer para fazer essa verificação, basta usar o parâmetro    --check    . Para maiores informações, use o parâmetro    --help     .
 
     curl -sS https://getcomposer.org/installer | php -- --help    
 
@@ -77,7 +78,8 @@ Próximo release significativo (operador ~).
 
 O operador til (    ~    ) é melhor explicado através de um exemplo:     ~1.2    é equivalente a    >=1.2,<2.0    , enquanto    ~1.2.3   é equivalente a     >=1.2.3,<1.3    .Como você pode ver, é mais útil para projetos que respeitam o versionamento semântico. Um uso comum seria para marcar a menor versão secundária depentente, como    ~1.2    (que permite qualquer outra versão exceto a 2.0). Uma vez que, teoricamente, não deve haver problemas de compatibilidade em versões anteriores a 2.0, o pacote irá funcionar corretamente. Uma outra outra explicação é que o     ~    especifica uma versão mínima, mas permite que o último digito especificado seja incrementado.
 
-Nota: Embora    2.0-beta.1   é estritamente anterior a    .20, uma restrição de versão igual a     ~1.2    não será instalada. Como dito anteriormente,    ~1.2   significa que o dígito    .2 pode mudar, mas o dígito    1.    é fixo.
+Nota: 
+Embora    2.0-beta.1   é estritamente anterior a    .20, uma restrição de versão igual a     ~1.2    não será instalada. Como dito anteriormente,    ~1.2   significa que o dígito    .2 pode mudar, mas o dígito    1.    é fixo.
 
 
 Escalabilidade
@@ -104,63 +106,71 @@ Outra coisa é que o comando    install   faz é adicionar o arquivo    composer
 
 composer.lock - The Lock File#
 
-After installing the dependencies, Composer writes the list of the exact versions it installed into a composer.lock file. This locks the project to those specific versions.
 
-Commit your application's composer.lock (along with composer.json) into version control.
+Após a instalação das dependências, o Composer irá criar a lista das versões exatas instaladas dentro do arquivo composer.lock, o que fará com que o projeto seja "fechado" nessas versões específicas.
 
-This is important because the install command checks if a lock file is present, and if it is, it downloads the versions specified there (regardless of what composer.json says).
+No seu controle de versão, dê um "commit" no arquivo composer.lock. Essa medida é importante pois o comando install checa se um arquivo de "lock" está presente e caso esteja, o composer irá baixar apenas as versões das dependências ali especificadas (independente do que está no arquivo composer.json).
 
-This means that anyone who sets up the project will download the exact same version of the dependencies. Your CI server, production machines, other developers in your team, everything and everyone runs on the same dependencies, which mitigates the potential for bugs affecting only some parts of the deployments. Even if you develop alone, in six months when reinstalling the project you can feel confident the dependencies installed are still working even if your dependencies released many new versions since then.
+Isto significa dizer que, qualquer um que configurar o projeto irá fazer o donwload das versões **exatas** das dependências. Sua máquina local de desenvolvimento, os servidores do produção, os outros desenvolvedores do seu time, tudo e todos rodarão o aplicativo sob as mesmas dependências, o que mitiga o potencial de bugs que afetam apenas algumas partes do desenvolvimento. E mesmo que você trabalhe sozinho, em seis meses quando precisar resintalar o projeto você pode se sentir confiante de que as dependências instaladas ainda funcionam mesmo que as dependências atuais estejam em versões maiores.
 
-If no composer.lock file exists, Composer will read the dependencies and versions from composer.json and create the lock file.
+Se não houver nenhum arquivo composer.lock, o Composer irá trazer as referências de dependências (e suas versões)  direto do composer.json e irá criar o arquivo de lock.
 
-This means that if any of the dependencies get a new version, you won't get the updates automatically. To update to the new version, use update command. This will fetch the latest matching versions (according to your composer.json file) and also update the lock file with the new version.
+Isto significa que se alguma das dependências estiverem numa nova versão, você não vai obter os updates automaticamente. Para atualizar para uma nova versão, use o comando upadate. Ele irá buscar a última versão de acordo com o arquivo composer.json e também irá atualizar o arquivo de lock para apontar para a nova versão.
 
-php composer.phar update
-If you only want to install or update one dependency, you can whitelist them:
+    php composer.phar update
 
-php composer.phar update monolog/monolog [...]
-Note: For libraries it is not necessarily recommended to commit the lock file, see also: Libraries - Lock file.
+Se você deseja apenas instalar ou atualizar uma dependência apenas, você pode colocá-la na whitelist:
+
+    php composer.phar update monolog/monolog [...]
+
+
+Nota: para bibliotecas, não é necessáriamente recomendado dar um "commit" no arquivo de lock. Veja também: Bibliotecas - arquivo de lock
+
+
 Packagist#
 
-Packagist is the main Composer repository. A Composer repository is basically a package source: a place where you can get packages from. Packagist aims to be the central repository that everybody uses. This means that you can automatically require any package that is available there.
 
-If you go to the packagist website (packagist.org), you can browse and search for packages.
+Packagist é o principal repositório do Composer. Um repositório do composer é basicamente uma fonte de pacotes: um lugar de onde você pode obter os pacotes. O Packagist visa ser o repositório central, aquele que todo mundo usa. Isto significa que você pode automaticamente requerer qualquer pacote disponível nele.
 
-Any open source project using Composer should publish their packages on packagist. A library doesn't need to be on packagist to be used by Composer, but it makes life quite a bit simpler.
+Se você acessar o site do Packagist (packagist.org), você pode visualizar e buscar todos os pacotes.
+
+Qualquer projeto opensource usando o Composer deve publicar seus pacotes no packagist. Uma biblioteca não precisa estar no Packagist para ser usada pelo COmposer, mas faz a vida muito mais simples.
 
 Autoloading#
 
-For libraries that specify autoload information, Composer generates a vendor/autoload.php file. You can simply include this file and you will get autoloading for free.
 
-require 'vendor/autoload.php';
-This makes it really easy to use third party code. For example: If your project depends on monolog, you can just start using classes from it, and they will be autoloaded.
+Para bibliotecas que especificam informações de autoload, o Composer gera um arquivo chamado vendor/autolload.php. Simplesmente dê um include neste arquivo e ele será carregado automaticamente.
 
-$log = new Monolog\Logger('name');
-$log->pushHandler(new Monolog\Handler\StreamHandler('app.log', Monolog\Logger::WARNING));
+    require 'vendor/autoload.php';
 
-$log->addWarning('Foo');
-You can even add your own code to the autoloader by adding an autoload field to composer.json.
+Isto faz com que um código de terceiro seja facilmente utilizado. Por exemplo: Se seu projeto depende do monolog, você pode começar usando suas classes, e elas serão carregadas automaticamente.
 
-{
+    $log = new Monolog\Logger('name');
+    $log->pushHandler(new Monolog\Handler\StreamHandler('app.log', Monolog\Logger::WARNING));
+    $log->addWarning('Foo');
+
+Você pode inclusive adicionar seu próprio código no autoloader, adicionando um campo de autoload no composer.json: 
+
+    {
     "autoload": {
         "psr-4": {"Acme\\": "src/"}
     }
-}
-Composer will register a PSR-4 autoloader for the Acme namespace.
+    }
 
-You define a mapping from namespaces to directories. The src directory would be in your project root, on the same level as vendor directory is. An example filename would be src/Foo.php containing an Acme\Foo class.
+No exemplo acima, o composer irá registrar um autoloader PSR-4 ao namespace Acme.
 
-After adding the autoload field, you have to re-run install to re-generate the vendor/autoload.php file.
+Você pode definir um mapeamento (mapping) desde namespaces até diretórios. O diretório src estará na raiz do seu projeto, no mesmo nível que o diretório vendor esta. Um exemplo seria o arquivo src/Foo.php contendo uma classe chamada Acme\Foo.
 
-Including that file will also return the autoloader instance, so you can store the return value of the include call in a variable and add more namespaces. This can be useful for autoloading classes in a test suite, for example.
+Após adicionar o campo de autoload, você deve rodar o comando de install novamente para que o arquivo vendor/autoload.php seja gerado de novo.
 
-$loader = require 'vendor/autoload.php';
-$loader->add('Acme\\Test\\', __DIR__);
-In addition to PSR-4 autoloading, classmap is also supported. This allows classes to be autoloaded even if they do not conform to PSR-4. See the autoload reference for more details.
+Incluindo este arquivo, será retornado também uma instância do autoloader, então você pode armazenar o valor de retorno da chamada do include numa variável e adicionar mais namespaces. Isto pode ser útil para fazer o autoload em várias classes, num ambiente de testes. Por exemplo:
 
-Note: Composer provides its own autoloader. If you don't want to use that one, you can just include vendor/composer/autoload_*.php files, which return associative arrays allowing you to configure your own autoloader.
+    $loader = require 'vendor/autoload.php';
+    $loader->add('Acme\\Test\\', __DIR__);
 
+Adicional ao autoloading do PSR-4, o classmap também é suportado. Isso significa dizer que as classes podem ser carregadas automaticamente mesmo se elas não estão conforme o PSR-4. Para maiores detalhes, consulte a referência do autoload.
+
+Nota: O Composer fornece seu próprio autoloader. Se você não deseja usá-lo, basta apenas incluir seus arquivos .php na pasta vendor/composer/autoload_*.php , e será retornado arrays associativos, permitindo que você configure seu próprio autoloader.
 
 
 
