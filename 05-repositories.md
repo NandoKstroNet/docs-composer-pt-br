@@ -1,55 +1,37 @@
-# Repositories
+# Repositórios
 
-This chapter will explain the concept of packages and repositories, what kinds
-of repositories are available, and how they work.
+Esse capitulo ira explicar o conceito de pacotes e repositórios, que tipos de repositórios estão disponíveis, e como eles funcionam.
 
-## Concepts
+## Conceitos
 
-Before we look at the different types of repositories that exist, we need to
-understand some of the basic concepts that composer is built on.
+Antes de nos olharmos os diferentes tipos de repositórios que existem, nós precisamos entender alguns dos conceitos básicos na qual o composer é fundamentado.
+### Pacote
 
-### Package
+O Composer é um gerenciador de dependências. Ele instala pacotes localmente. Um pacote é essencialmente apenas um diretório que contem algo. Nesse caso é código PHP, mas em teoria pode ser qualquer coisa. E contem um descritor de pacote que possui um nome e versão. O nome e a versão são utilizados para identificar o pacote.
 
-Composer is a dependency manager. It installs packages locally. A package is
-essentially just a directory containing something. In this case it is PHP
-code, but in theory it could be anything. And it contains a package
-description which has a name and a version. The name and the version are used
-to identify the package.
+De fato, internamente Composer vê toda versão como um pacote separado. Essa distinção não faz diferença para você quando usa o Composer, mas é um tanto importante quando deseja mudar.
 
-In fact, internally composer sees every version as a separate package. While
-this distinction does not matter when you are using composer, it's quite
-important when you want to change it.
+Em adição ao nome a versão, existem metadados muito importantes. A informação mais relevante para a instalação é a definição do código, que descreve onde pegar o conteúdo do pacote. O pacote de dados aponta para o conteúdo do pacote. E existem duas opções: dist e source.
 
-In addition to the name and the version, there is useful metadata. The information
-most relevant for installation is the source definition, which describes where
-to get the package contents. The package data points to the contents of the
-package. And there are two options here: dist and source.
+**Dist:** O dist é uma versão do pacote de dados. Normalmente uma versão de release, normalmente uma versão estável.
 
-**Dist:** The dist is a packaged version of the package data. Usually a
-released version, usually a stable release.
+**Source:** O source é utilizado para desenvolvimento. Ele é normalmente originado de um repositório, como git. Você pode acessar quando quiser e modificar o pacote baixado.
 
-**Source:** The source is used for development. This will usually originate
-from a source code repository, such as git. You can fetch this when you want
-to modify the downloaded package.
+Pacotes podem fornecer uma das opções acima, ou ate mesmo ambas. Dependendo de certos fatores, como solicitações de usuários e estabilidade do pacote, uma sera escolhida em detrimento de outra.
 
-Packages can supply either of these, or even both. Depending on certain
-factors, such as user-supplied options and stability of the package, one will
-be preferred.
+### Repositório
 
-### Repository
+Um repositório é uma fonte de pacotes. É uma lista de pacotes/versões. O composer ira olhar em todos seus repositórios para achar o pacote que seu projeto requer.
 
-A repository is a package source. It's a list of packages/versions. Composer
-will look in all your repositories to find the packages your project requires.
 
-By default only the Packagist repository is registered in Composer. You can
-add more repositories to your project by declaring them in `composer.json`.
+Por padrão o Packagist é o unico repositorio registrado no composer. Você pode adicionar mais repositorios no seu projeto declarando eles no composer.json.
 
 Repositories are only available to the root package and the repositories
 defined in your dependencies will not be loaded. Read the
 [FAQ entry](faqs/why-can't-composer-load-repositories-recursively.md) if you
 want to learn why.
 
-## Types
+## Tipos
 
 ### Composer
 
@@ -225,7 +207,7 @@ VCS stands for version control system. This includes versioning systems like
 git, svn or hg. Composer has a repository type for installing packages from
 these systems.
 
-#### Loading a package from a VCS repository
+#### Carregando um pacote de um repositório VCS
 
 There are a few use cases for this. The most common one is maintaining your
 own fork of a third party library. If you are using a certain library for your
