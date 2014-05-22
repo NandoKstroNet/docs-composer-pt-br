@@ -13,12 +13,12 @@ README como responsável pela tradução do mesmo.
 
 01-basic-usage.md `Traduzido | Revisado`
 
-02-libraries.md  [NandoKstroNet](http://github.com/NandoKstroNet)
+02-libraries.md  [NandoKstroNet](http://github.com/NandoKstroNet) `em tradução`
 
-03-cli.md  [Gustavo](http://github.com/gustavoper)
+03-cli.md  [Gustavo](http://github.com/gustavoper) `em tradução`
 
 04-schema.md
 
-05-repositories.md  [Gustavo](http://github.com/gustavoper)
+05-repositories.md  [Alfredo](https://github.com/alphabraga) `em tradução`
 
 06-community.md
